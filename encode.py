@@ -96,13 +96,16 @@ def updateHash(hash, w):
     return hash
 
 def encode(original):
-    messageBlock = [ord(char) for char in original]
+    messageBlock = [byte for char in original for byte in char.encode('utf-8')]
+
+    size = (len (messageBlock)) * 8 
+
     messageBlock.append(128)
 
     while (len (messageBlock) * 8 + 64) % 512 != 0:
         messageBlock.append(0)
 
-    size = (len (original)) * 8    
+      
     sizeBlock = []
 
     while size > 0:
@@ -133,3 +136,5 @@ def encode(original):
     encoded = ''.join([f'{i:08x}' for i in hash])
 
     return encoded
+
+# encode("í")
