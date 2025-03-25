@@ -30,22 +30,17 @@ def encodeChunk(chunk):
 
     # print(w)
 
-    i, j, k = 1, 14, 16
     deviations = [0] * 2
 
-    while k < 64:
-        deviations[0] = (rightRotate (w[i], 7) ^ rightRotate (w[i], 18) ^ (w[i] >> 3))
-        deviations[1] = (rightRotate (w[j], 17) ^ rightRotate (w[j], 19) ^ (w[j] >> 10))
+    for k in range (16, 64):
+        deviations[0] = (rightRotate (w[k - 15], 7) ^ rightRotate (w[k - 15], 18) ^ (w[k - 15] >> 3))
+        deviations[1] = (rightRotate (w[k - 2], 17) ^ rightRotate (w[k - 2], 19) ^ (w[k - 2] >> 10))
 
         # print(deviations)
 
-        w[k] = (w[i - 1] + deviations[0] + w[j - 5] + deviations[1]) & 0xFFFFFFFF
+        w[k] = (w[k - 16] + deviations[0] + w[k - 7] + deviations[1]) & 0xFFFFFFFF
 
         # print(k, ": ", w[k])
-
-        i += 1
-        j += 1
-        k += 1
 
     # print(w)
     return w
@@ -121,17 +116,14 @@ def encode(original):
 
     # print(messageBlock)
 
-    i = 0
     hash = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19]
 
-    while i < len (messageBlock):
+    for i in range (0, len (messageBlock), 64):
         # print (i)
 
         chunk = messageBlock[i:i + 64]
 
         hash = updateHash(hash, encodeChunk(chunk)) 
-
-        i += 64
 
     encoded = ''.join([f'{i:08x}' for i in hash])
 
