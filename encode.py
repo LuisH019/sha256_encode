@@ -90,8 +90,23 @@ def updateHash(hash, w):
 
     return hash
 
-def encode(original):
-    messageBlock = [byte for char in original for byte in char.encode('utf-8')]
+def readString (original):
+    return [byte for char in original for byte in char.encode('utf-8')]
+
+def readFile(path):
+    f = open(path, 'rb')
+    bin = f.read()
+
+    messageBlock = [b for b in bin]
+
+    f.close()
+    
+    return messageBlock
+
+def encode(path):
+    # messageBlock = readString(original)
+
+    messageBlock = readFile(path)
 
     size = (len (messageBlock)) * 8 
 
@@ -129,4 +144,4 @@ def encode(original):
 
     return encoded
 
-# encode("í")
+print (encode("teste.pdf"))
