@@ -103,7 +103,7 @@ def readFile(path):
     
     return messageBlock
 
-def encode(content, op):
+def sha256Encode(content, op):
     if op == 'f':
         messageBlock = readFile(content)
     elif op == 's':

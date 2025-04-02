@@ -1,26 +1,26 @@
 import os
 
 def saveKey(fileName, encoded):
-    keyFileName = fileName + "-key.txt"
+    keyFileName = fileName + "-key.bin"
     
-    f = open(keyFileName, "w")
+    f = open(keyFileName, "wb")
     
-    f.write(encoded)
+    f.write(encoded.encode())
     print(f"Chave do arquivo salva em {keyFileName}")
     f.close()
     
 
 def validateKey(fileName, encoded):
     
-    keyFileName = fileName + "-key.txt"
+    keyFileName = fileName + "-key.bin"
     
     if not os.path.exists(keyFileName):
         print ("ERRO: Chave ou arquivo inexistente")
         return
     
-    f = open(keyFileName, 'r')
+    f = open(keyFileName, 'rb')
     
-    key = (f.read())
+    key = (f.read().decode())
     
     if key == encoded:
         print("Arquivo Legitimo!")

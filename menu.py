@@ -1,8 +1,7 @@
 import os
-import time
-from encode import encode
+from util.sha256Encode import sha256Encode
 from util.inputPlus import inputPlus
-from util.key_handler import saveKey, validateKey
+from util.keyHandler import saveKey, validateKey
 
 
 def exibirMenu():
@@ -25,7 +24,7 @@ def exibirMenu():
                 
                 original = input("Digite a mensagem a ser codificada: ")
 
-                encoded = encode(original, 's')
+                encoded = sha256Encode(original, 's')
                 print("=========================")
                 print("Mensagem codificada:", encoded)
                 print("=========================")
@@ -45,7 +44,7 @@ def exibirMenu():
                     
                 fileName = input("Digite o nome do arquivo: ")
 
-                encoded = encode(fileName, 'f')
+                encoded = sha256Encode(fileName, 'f')
                 print("=========================")
                 print("Chave do arquivo:", encoded)
                 saveKey(fileName, encoded)
@@ -66,7 +65,7 @@ def exibirMenu():
                     
                 fileName = input("Digite o nome do arquivo: ")
 
-                encoded = encode(fileName, 'f')
+                encoded = sha256Encode(fileName, 'f')
                 print("=========================")
                 validateKey(fileName, encoded)
                 print("=========================")
