@@ -90,8 +90,8 @@ def updateHash(hash, w):
 
     return hash
 
-def readString (original):
-    return [byte for char in original for byte in char.encode('utf-8')]
+def readString (message):
+    return [byte for char in message for byte in char.encode('utf-8')]
 
 def readFile(path):
     f = open(path, 'rb')
@@ -103,11 +103,14 @@ def readFile(path):
     
     return messageBlock
 
-def encode(path):
-    # messageBlock = readString(original)
-
-    messageBlock = readFile(path)
-
+def encode(content, op):
+    if op == 'f':
+        messageBlock = readFile(content)
+    elif op == 's':
+        messageBlock = readString(content)
+    else:
+        return
+    
     size = (len (messageBlock)) * 8 
 
     messageBlock.append(128)
@@ -140,5 +143,3 @@ def encode(path):
     encoded = ''.join([f'{i:08x}' for i in hash])
 
     return encoded
-
-print (encode("teste.jpg"))
